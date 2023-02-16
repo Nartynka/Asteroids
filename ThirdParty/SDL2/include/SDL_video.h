@@ -99,9 +99,10 @@ typedef struct SDL_Window SDL_Window;
  *
  *  \sa SDL_GetWindowFlags()
  */
+
 typedef enum
-{
-    SDL_WINDOW_FULLSCREEN = 0x00000001,         /**< fullscreen window */
+{ 
+    SDL_WINDOW_FULLSCREEN = 0x00000001,         /**< fullscreen window */ 
     SDL_WINDOW_OPENGL = 0x00000002,             /**< window usable with OpenGL context */
     SDL_WINDOW_SHOWN = 0x00000004,              /**< window is visible */
     SDL_WINDOW_HIDDEN = 0x00000008,             /**< window is not visible */
