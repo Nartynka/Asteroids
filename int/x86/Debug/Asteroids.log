@@ -1,1 +1,6 @@
-﻿  Asteroids.vcxproj -> D:\Projects\Asteroids-Martyna\bin\x86\Debug\Asteroids.exe
+﻿  Main.cpp
+D:\Projects\Asteroids-Martyna\Main.cpp(147,17): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\Asteroids-Martyna\Main.cpp(148,17): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\Asteroids-Martyna\Main.cpp(152,18): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+D:\Projects\Asteroids-Martyna\Main.cpp(154,18): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  Asteroids.vcxproj -> D:\Projects\Asteroids-Martyna\bin\x86\Debug\Asteroids.exe
