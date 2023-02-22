@@ -10,6 +10,10 @@ SDL_Surface* screenSurface = NULL;
 
 int main(int argc, char* args[])
 {
+	float dt = SDL_GetTicks();
+	float lastTime = 0.f;
+	float desiredDt = 1 / 60.f; // 60 FPS
+
 	int result = SDL_Init(SDL_INIT_VIDEO);
 	assert(result == 0 && "SDL could not initialize!\n");
 
@@ -21,18 +25,25 @@ int main(int argc, char* args[])
 	//Game loop
 	while (!quit)
 	{
-		// Handle input queue (1 = pending event; 0 = no event)
-		while (SDL_PollEvent(&event) != 0)
-		{
-			//User requests quit / click X
-			if (event.type == SDL_QUIT)
-			{
-				quit = true;
-			}
-		}
-		screenSurface = SDL_GetWindowSurface(window);
+		dt = SDL_GetTicks() - lastTime;
 
-		SDL_UpdateWindowSurface(window);
+		if (dt > desiredDt) 
+		{
+			// Handle input queue (1 = pending event; 0 = no event)
+			while (SDL_PollEvent(&event) != 0)
+			{
+				//User requests quit / click X
+				if (event.type == SDL_QUIT)
+				{
+					quit = true;
+				}
+			}
+
+			screenSurface = SDL_GetWindowSurface(window);
+			SDL_UpdateWindowSurface(window);
+
+			lastTime = SDL_GetTicks();
+		}
 	}
 	
 	SDL_DestroyWindow(window);
