@@ -1,62 +1,39 @@
 #include <SDL.h>
 #include <SDL_image.h>
-#include <stdio.h> // printf
-#include <string>
 #include <cassert> 
+#include <vector>
 
-const int SCREEN_WIDTH = 1080;
-const int SCREEN_HEIGHT = 720;
+#include "Components/Components.h"
+#include "Systems/InputSystem.h"
+#include "Systems/MoveSystem.h"
+#include "Systems/RenderSystem.h"
 
+int CURR_ID = 0;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
-struct Vec2
+
+struct Entity
 {
-	float x;
-	float y;
-	void operator+=(Vec2 b) {
-		x += b.x;
-		y += b.y;
-	}
-	void operator-=(Vec2 b) {
-		x -= b.x;
-		y -= b.y;
-	}
-	Vec2 operator*(float b) {
-		Vec2 temp = { x, y };
-		temp.x *= b;
-		temp.y *= b;
-		return temp;
-	}
+	int id;
 };
 
-struct SizeVec2
+std::vector<Entity> entities;
+std::vector<MovementComponent> mcomps;
+std::vector<TextureComponent> rcomps;
+
+void CreateEntity()
 {
-	int w;
-	int h;
-};
+	// 0 and then increment
+	entities.push_back({ CURR_ID++ });
+	// entities[0].id = 0 , CURR_ID = 1
+}
 
-//struct PositionComponent
-//{
-//	Vec2 position;
-//};
-
-//struct SizeComponent
-//{
-//	SizeVec2 size;
-//};
-
-struct TextureComponent
+void AddMComp(int id)
 {
-	SDL_Texture* texture;
-	SizeVec2 size;
-};
-
-struct MovementComponent
-{
-	Vec2 velocity = { 0,0 };
-	Vec2 position = { 0,0 };
-};
+	MovementComponent mcomp = { id };
+	mcomps.push_back(mcomp);
+}
 
 /*
 	Player Needs:
@@ -80,58 +57,21 @@ struct Asteroid
 	TextureComponent textureComp = {};
 };
 
-void move(MovementComponent& moveComp, float dt)
-{
-	moveComp.position += moveComp.velocity * dt;
 
-}
 
-bool is_outside_screen(const MovementComponent& moveComp, const TextureComponent& sizeComp)
-{
-	if (moveComp.position.y < 0 || (moveComp.position.y + sizeComp.size.h > SCREEN_HEIGHT) || moveComp.position.x < 0 || (moveComp.position.x + sizeComp.size.w > SCREEN_WIDTH))
-		return true;
-
-	return false;
-}
-
-void render(const TextureComponent& textureComp, const MovementComponent& moveComp)
-{
-	SDL_Rect a = { (int)moveComp.position.x, (int)moveComp.position.y, textureComp.size.w, textureComp.size.h };
-	SDL_RenderCopy(renderer, textureComp.texture, NULL, &a);
-}
-
-void handle_input(MovementComponent& moveComp)
-{
-	moveComp.velocity = { 0,0 };
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-	if (currentKeyStates[SDL_SCANCODE_UP] || currentKeyStates[SDL_SCANCODE_W])
-	{
-		moveComp.velocity.y = -1.0;
-	}
-	if (currentKeyStates[SDL_SCANCODE_DOWN] || currentKeyStates[SDL_SCANCODE_S])
-	{
-		moveComp.velocity.y = 1.0;
-	}
-	if (currentKeyStates[SDL_SCANCODE_LEFT] || currentKeyStates[SDL_SCANCODE_A])
-	{
-		moveComp.velocity.x = -1.0;
-	}
-	if (currentKeyStates[SDL_SCANCODE_RIGHT] || currentKeyStates[SDL_SCANCODE_D])
-	{
-		moveComp.velocity.x = 1.0;
-	}
-}
-
-SDL_Texture* load_texture(std::string path, SizeVec2& size)
+SDL_Texture* load_texture(const char* path, Vec2& size)
 {
 	SDL_Texture* new_texture = NULL;
-	SDL_Surface* loaded_surface = IMG_Load(path.c_str());
+	SDL_Surface* loaded_surface = IMG_Load(path);
 	assert(loaded_surface != nullptr && "Unable to load image\n");
 
 	new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
 	assert(new_texture != nullptr && "Unable to create texture from image\n");
 
-	size = { loaded_surface->w, loaded_surface->h };
+	size = { static_cast<float>(loaded_surface->w), (float)loaded_surface->h };
+
+	size.x;
+	size.w;
 
 	SDL_FreeSurface(loaded_surface);
 	loaded_surface = NULL;
@@ -141,9 +81,9 @@ SDL_Texture* load_texture(std::string path, SizeVec2& size)
 
 int main(int argc, char* args[])
 {
-	float dt = (float)SDL_GetTicks();
+	float dt = (float)(SDL_GetTicks() / 1000.f);
 	float lastTime = 0.f;
-	const float desiredDt = (1 / 60.f) * 1000; // 60 FPS
+	const float DESIRED_DT = 1 / 60.f; // 60 FPS
 
 	int result = SDL_Init(SDL_INIT_VIDEO);
 	assert(result == 0 && "SDL could not initialize!");
@@ -157,6 +97,12 @@ int main(int argc, char* args[])
 	result = IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG;
 	assert(result && "SDL_image could not initialize!");
 
+	/*Uint64_t id = CreateEntity("Player");
+	AddMovementComponent(id);
+	AddRenderComponent(id, "ship.png");
+
+	ResolveInput(inputcomponent, movementcomponent)
+	*/
 	Player player;
 	Asteroid asteroid;
 	player.textureComp.texture = load_texture("ship.png", player.textureComp.size);
@@ -173,10 +119,16 @@ int main(int argc, char* args[])
 	//Game loop
 	while (!quit)
 	{
-		dt = SDL_GetTicks() - lastTime;
+		dt = (SDL_GetTicks() - lastTime) / 1000;
 
-		if (dt >= desiredDt)
+		if (dt >= DESIRED_DT)
 		{
+			/*
+			input();
+			update();
+			draw();
+			*/
+
 			while (SDL_PollEvent(&event) != 0)
 			{
 				if (event.type == SDL_QUIT)
@@ -189,16 +141,16 @@ int main(int argc, char* args[])
 			if (is_outside_screen(player.movementComp, player.textureComp))
 				player.movementComp.position -= player.movementComp.velocity * dt;
 
-			/* Asteroid */
+			///* Asteroid */
 			move(asteroid.movementComp, dt);
 
-			/* Render */
+			///* Render */
 			SDL_RenderClear(renderer);
 
-			render(player.textureComp, player.movementComp);
+			render(renderer, player.textureComp, player.movementComp);
 
 			if (asteroid.movementComp.position.x < SCREEN_WIDTH && asteroid.movementComp.position.y < SCREEN_HEIGHT)
-				render(asteroid.textureComp, asteroid.movementComp);
+				render(renderer, asteroid.textureComp, asteroid.movementComp);
 			else
 				asteroid.movementComp.position = { 0.f, (float)-asteroid.textureComp.size.h };
 
