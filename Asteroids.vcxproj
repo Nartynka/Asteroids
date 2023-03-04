@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Components\Components.h" />
+    <ClInclude Include="src\Systems\InputSystem.h" />
+    <ClInclude Include="src\Systems\MoveSystem.h" />
+    <ClInclude Include="src\Systems\RenderSystem.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -92,7 +101,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)ThirdParty\SDL2_ttf\include;$(ProjectDir)ThirdParty\SDL2_image\include;$(ProjectDir)ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,15 +163,6 @@
       <AdditionalLibraryDirectories>$(ProjectDir)ThirdParty\SDL2_ttf\lib\x64;$(ProjectDir)ThirdParty\SDL2_image\lib\x64;$(ProjectDir)ThirdParty\SDL2\lib\x64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Components\Components.h" />
-    <ClInclude Include="Systems\InputSystem.h" />
-    <ClInclude Include="Systems\MoveSystem.h" />
-    <ClInclude Include="Systems\RenderSystem.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

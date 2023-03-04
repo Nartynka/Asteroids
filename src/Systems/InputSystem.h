@@ -1,5 +1,5 @@
 #pragma once
-#include "../Components/Components.h"
+#include "Components/Components.h"
 
 void handle_input(MovementComponent& moveComp)
 {

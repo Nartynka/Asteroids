@@ -12,29 +12,6 @@ int CURR_ID = 0;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
-
-struct Entity
-{
-	int id;
-};
-
-std::vector<Entity> entities;
-std::vector<MovementComponent> mcomps;
-std::vector<TextureComponent> rcomps;
-
-void CreateEntity()
-{
-	// 0 and then increment
-	entities.push_back({ CURR_ID++ });
-	// entities[0].id = 0 , CURR_ID = 1
-}
-
-void AddMComp(int id)
-{
-	MovementComponent mcomp = { id };
-	mcomps.push_back(mcomp);
-}
-
 /*
 	Player Needs:
 	- Position	PositionComponent (Vec2)
@@ -70,9 +47,6 @@ SDL_Texture* load_texture(const char* path, Vec2& size)
 
 	size = { static_cast<float>(loaded_surface->w), (float)loaded_surface->h };
 
-	size.x;
-	size.w;
-
 	SDL_FreeSurface(loaded_surface);
 	loaded_surface = NULL;
 
@@ -105,9 +79,9 @@ int main(int argc, char* args[])
 	*/
 	Player player;
 	Asteroid asteroid;
-	player.textureComp.texture = load_texture("ship.png", player.textureComp.size);
+	player.textureComp.texture = load_texture("res/ship.png", player.textureComp.size);
 	assert(player.textureComp.texture != nullptr && "Player texture could not be created!");
-	asteroid.textureComp.texture = load_texture("asteroids/asteroid-1.png", asteroid.textureComp.size);
+	asteroid.textureComp.texture = load_texture("res/asteroids/asteroid-1.png", asteroid.textureComp.size);
 	assert(asteroid.textureComp.texture != nullptr && "Asteroid texture could not be created!");
 
 	player.movementComp.position = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
@@ -152,7 +126,7 @@ int main(int argc, char* args[])
 			if (asteroid.movementComp.position.x < SCREEN_WIDTH && asteroid.movementComp.position.y < SCREEN_HEIGHT)
 				render(renderer, asteroid.textureComp, asteroid.movementComp);
 			else
-				asteroid.movementComp.position = { 0.f, (float)-asteroid.textureComp.size.h };
+				asteroid.movementComp.position = { 0.f, (float)-asteroid.textureComp.size.y };
 
 			SDL_RenderPresent(renderer);
 

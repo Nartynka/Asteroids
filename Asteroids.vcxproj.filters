@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="src\Main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Systems\InputSystem.h">
+    <ClInclude Include="src\Systems\InputSystem.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\MoveSystem.h">
+    <ClInclude Include="src\Systems\MoveSystem.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\RenderSystem.h">
+    <ClInclude Include="src\Systems\RenderSystem.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Components.h">
+    <ClInclude Include="src\Components\Components.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>
