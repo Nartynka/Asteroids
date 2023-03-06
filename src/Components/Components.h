@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Vec2.h"
+#include <array>
+#include <stack>
 
 enum Components
 {
@@ -9,16 +11,42 @@ enum Components
 	COUNT
 };
 
-constexpr int MAX_COMPONENT_COUNT = 128;
+constexpr int MAX_COMPONENT_COUNT = 16;
+
+//@TODO : Split into TransformComponent and MovementComponent
+struct MovementComponent
+{
+	Vec2 position = {};
+	Vec2 velocity = {};
+};
 
 struct TextureComponent
 {
-	SDL_Texture* texture;
-	Vec2 size = {};
+	char texture_path[64];       
+	struct SDL_Texture* texture; 
+	Vec2 size = {};              
 };
 
-struct MovementComponent
+class ComponentAllocator
 {
-	Vec2 velocity = {};
-	Vec2 position = {};
+public:
+	static ComponentAllocator* Get();
+
+	int CreateMovementComponent(Vec2 position, Vec2 velocity);
+	int CreateTextureComponent(const char* path);
+
+	void DestroyMovementComponent(int idx);
+	void DestroyTextureComponent(int idx);
+
+	//@TODO: These need to be replaced with a custom container (fixed vector)
+	std::array<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
+	std::array<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
+
+private:
+	ComponentAllocator();
+	~ComponentAllocator();
+	static ComponentAllocator* allocator;
+
+	std::stack<int> movement_components_free_indeces;
+	std::stack<int> texture_components_free_indeces;
 };

@@ -13,23 +13,35 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Pliki źródłowe\Systems">
+      <UniqueIdentifier>{d9e0da16-0cad-43a5-a428-26a1c21e379a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Components">
+      <UniqueIdentifier>{a445d2b8-8806-4888-a2e3-9260539b3509}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\ComponentAllocator.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Systems\InputSystem.h">
-      <Filter>Pliki źródłowe</Filter>
+    <ClInclude Include="src\Systems\RenderSystem.h">
+      <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\MoveSystem.h">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\RenderSystem.h">
-      <Filter>Pliki źródłowe</Filter>
+    <ClInclude Include="src\Systems\InputSystem.h">
+      <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\Components.h">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vec2.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

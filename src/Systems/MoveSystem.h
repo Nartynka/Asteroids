@@ -1,20 +1,16 @@
 #pragma once
 #include "Components/Components.h"
 
+//@TODO: These don't belong here
 const int SPEED = 100;
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
 
-
-void move(MovementComponent& moveComp, float dt)
+//@TODO: For now we can once again leave the screen
+void move(MovementComponent* mov_components, size_t count, float dt)
 {
-	moveComp.position += moveComp.velocity * SPEED * dt;
-}
-
-bool is_outside_screen(const MovementComponent& moveComp, const TextureComponent& sizeComp)
-{
-	if (moveComp.position.y < 0 || (moveComp.position.y + sizeComp.size.y > SCREEN_HEIGHT) || moveComp.position.x < 0 || (moveComp.position.x + sizeComp.size.y > SCREEN_WIDTH))
-		return true;
-
-	return false;
+	for (unsigned int i = 0; i < count; i++)
+	{
+		mov_components[i].position += mov_components[i].velocity * SPEED * dt;
+	}
 }

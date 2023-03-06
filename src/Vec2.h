@@ -18,8 +18,3 @@ struct Vec2
 		return temp;
 	}
 };
-
-struct Size2
-{
-	int w, h;
-};
