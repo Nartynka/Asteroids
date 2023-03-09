@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\Components.h" />
+    <ClInclude Include="src\StaticVector.h" />
     <ClInclude Include="src\Systems\InputSystem.h" />
     <ClInclude Include="src\Systems\MoveSystem.h" />
     <ClInclude Include="src\Systems\RenderSystem.h" />

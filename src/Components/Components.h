@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vec2.h"
+#include "StaticVector.h"
 #include <array>
 #include <stack>
 
@@ -24,7 +25,7 @@ struct TextureComponent
 {
 	char texture_path[64];       
 	struct SDL_Texture* texture; 
-	Vec2 size = {};              
+	Vec2 size = {};
 };
 
 class ComponentAllocator
@@ -39,8 +40,8 @@ public:
 	void DestroyTextureComponent(int idx);
 
 	//@TODO: These need to be replaced with a custom container (fixed vector)
-	std::array<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
-	std::array<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
+	StaticVector<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
+	StaticVector<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
 
 private:
 	ComponentAllocator();
