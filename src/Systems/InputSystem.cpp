@@ -1,5 +1,4 @@
-#pragma once
-#include "Components/Components.h"
+#include "Systems.h"
 
 //@TODO: This should iterate over InputComponents (not every input means movement - shooting, pausing etc)
 void handle_input(MovementComponent* mov_components, size_t count)

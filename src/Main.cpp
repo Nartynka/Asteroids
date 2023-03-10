@@ -4,9 +4,9 @@
 #include <vector>
 
 #include "Components/Components.h"
-#include "Systems/InputSystem.h"
-#include "Systems/MoveSystem.h"
-#include "Systems/RenderSystem.h"
+#include "Systems/InputSystem.cpp"
+#include "Systems/MoveSystem.cpp"
+#include "Systems/RenderSystem.cpp"
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;

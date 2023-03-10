@@ -29,13 +29,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Systems\RenderSystem.h">
+    <ClInclude Include="src\Systems\RenderSystem.cpp">
       <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\MoveSystem.h">
+    <ClInclude Include="src\Systems\MoveSystem.cpp">
       <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\InputSystem.h">
+    <ClInclude Include="src\Systems\InputSystem.cpp">
       <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\Components.h">
@@ -46,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="src\StaticVector.h">
       <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\Systems.h">
+      <Filter>Pliki źródłowe\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

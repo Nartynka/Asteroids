@@ -1,6 +1,5 @@
-#pragma once
-#include <SDL.h>
-#include "Components/Components.h"
+#include "Systems.h"
+#include <SDL_image.h>
 
 SDL_Texture* load_texture(SDL_Renderer* renderer, const char* path, Vec2& size)
 {

@@ -25,9 +25,10 @@
   <ItemGroup>
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\StaticVector.h" />
-    <ClInclude Include="src\Systems\InputSystem.h" />
-    <ClInclude Include="src\Systems\MoveSystem.h" />
-    <ClInclude Include="src\Systems\RenderSystem.h" />
+    <ClInclude Include="src\Systems\InputSystem.cpp" />
+    <ClInclude Include="src\Systems\MoveSystem.cpp" />
+    <ClInclude Include="src\Systems\RenderSystem.cpp" />
+    <ClInclude Include="src\Systems\Systems.h" />
     <ClInclude Include="src\Vec2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
