@@ -39,7 +39,6 @@ public:
 	void DestroyMovementComponent(int idx);
 	void DestroyTextureComponent(int idx);
 
-	//@TODO: These need to be replaced with a custom container (fixed vector)
 	StaticVector<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
 	StaticVector<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
 

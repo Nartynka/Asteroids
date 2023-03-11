@@ -62,8 +62,7 @@ int main(int argc, char* args[])
 			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary
 			handle_input(&comp_alloc->movement_components[player_mov_comp_idx], 1);
 			move(comp_alloc->movement_components.data(), comp_alloc->movement_components.size(), dt);
-			//TODO: For now i need to pass 2 manually, otherwise it will iterate over all empty components and try to open empty textures
-			render(renderer, comp_alloc->texture_components.data(), comp_alloc->movement_components.data(), 2);
+			render(renderer, comp_alloc->texture_components.data(), comp_alloc->movement_components.data(), comp_alloc->movement_components.size());
 
 			lastTime = (float)SDL_GetTicks();
 		}

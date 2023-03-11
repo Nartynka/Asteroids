@@ -1,6 +1,4 @@
 #pragma once
-#include <SDL.h>
-#include "Components/Components.h"
 
 void handle_input(MovementComponent* mov_components, size_t count);
 
