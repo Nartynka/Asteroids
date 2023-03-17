@@ -2,8 +2,6 @@
 
 #include "Vec2.h"
 #include "StaticVector.h"
-#include <array>
-#include <stack>
 
 enum Components
 {
@@ -13,6 +11,7 @@ enum Components
 };
 
 constexpr int MAX_COMPONENT_COUNT = 16;
+constexpr int MAX_ENTITY_COUNT = 16;
 
 //@TODO : Split into TransformComponent and MovementComponent
 struct MovementComponent
@@ -23,9 +22,15 @@ struct MovementComponent
 
 struct TextureComponent
 {
-	char texture_path[64];       
-	struct SDL_Texture* texture; 
+	char texture_path[64];
+	struct SDL_Texture* texture;
 	Vec2 size = {};
+};
+
+struct Entity
+{
+	unsigned int id;
+	int comp_ids[Components::COUNT];
 };
 
 class ComponentAllocator
@@ -33,8 +38,8 @@ class ComponentAllocator
 public:
 	static ComponentAllocator* Get();
 
-	int CreateMovementComponent(Vec2 position, Vec2 velocity);
-	int CreateTextureComponent(const char* path);
+	int CreateMovementComponent(unsigned int idx, Vec2 position, Vec2 velocity);
+	int CreateTextureComponent(unsigned int idx, const char* path);
 
 	void DestroyMovementComponent(int idx);
 	void DestroyTextureComponent(int idx);
@@ -43,10 +48,20 @@ public:
 	StaticVector<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
 
 private:
-	ComponentAllocator();
 	~ComponentAllocator();
 	static ComponentAllocator* allocator;
+};
 
-	std::stack<int> movement_components_free_indeces;
-	std::stack<int> texture_components_free_indeces;
+class EntityAllocator
+{
+public:
+	static EntityAllocator* Get();
+
+	int CreateEntity();
+	void DestroyEntity(int idx);
+
+	StaticVector<Entity, MAX_ENTITY_COUNT> entities;
+private:
+	~EntityAllocator();
+	static EntityAllocator* allocator;
 };

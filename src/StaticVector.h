@@ -1,13 +1,14 @@
 #pragma once
 #include <cassert>
-template <typename T, size_t i>
+#include <utility>
 
+template <typename T, size_t i>
 class StaticVector
 {
 public:
 	T& operator[](int idx)
 	{
-		assert(idx <= data_size && "Array index out of bound, exiting");
+		assert((idx >= 0 && idx < data_size) && "Index out of bound");
 		return data_array[idx];
 	}
 
@@ -16,25 +17,29 @@ public:
 		return data_size;
 	}
 
-	int push_back(T element)
+	int push_back(T& element)
 	{
-		assert(data_size != max_capacity && "Data table is full");
-		data_array[data_size++] = element;
-		return data_size-1;
+		assert(data_size < max_capacity && "Data array is full");
+		data_array[data_size++] = std::move(element);
+		return (int)data_size - 1;
 	}
 
-	void insert(int idx, T element)
+	int push_back(T&& element)
 	{
-		assert(data_size != max_capacity && "Data table is full");
-		data_array[idx] = element;
-		data_size++;
+		assert(data_size < max_capacity && "Data array is full");
+		data_array[data_size++] = std::move(element);
+		return (int)data_size - 1;
 	}
 
 	void erase(unsigned int idx)
 	{
-		assert(data_size != 0 && "Data table is empty");
-		data_array[idx] = data_array[data_size - 1];
+		assert(data_size > 0 && "Static Vector is empty!");
+		assert((idx < data_size && idx >= 0) && "Index out of range");
 		data_size--;
+		if (idx < data_size)
+		{
+			data_array[idx] = data_array[data_size];
+		}
 	}
 
 	T* data()
@@ -43,7 +48,7 @@ public:
 	}
 
 private:
-	T data_array[i];
+	T data_array[i] = {};
 	size_t data_size = 0;
 	size_t max_capacity = i;
 };

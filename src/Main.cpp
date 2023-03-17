@@ -4,6 +4,8 @@
 #include <vector>
 
 #include "Components/Components.h"
+#include "Components/Spawners.h"
+
 #include "Systems/InputSystem.cpp"
 #include "Systems/MoveSystem.cpp"
 #include "Systems/RenderSystem.cpp"
@@ -31,16 +33,15 @@ int main(int argc, char* args[])
 	result = IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG;
 	assert(result && "SDL_image could not initialize!");
 
-	//@TODO: Entity system/spawner needed to keep track of this
-	// 
-	//Player
 	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
-	int player_mov_comp_idx = comp_alloc->CreateMovementComponent({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, {});
-	comp_alloc->CreateTextureComponent("res/ship.png");
+	EntityAllocator* entity_alloc = EntityAllocator::Get();
+
+	//Player
+	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
+	int player_mov_comp_idx = entity_alloc->entities[player_idx].comp_ids[Components::MOVEMENT_COMPONENT];
 
 	//Asteroid
-	comp_alloc->CreateMovementComponent({ 100, 200 }, { 0.1f, 0.1f });
-	comp_alloc->CreateTextureComponent("res/asteroids/asteroid-1.png");
+	CreateAsteroid({ 100, 200 }, { 0.1f, 0.1f });
 
 	bool quit = false;
 	SDL_Event event;

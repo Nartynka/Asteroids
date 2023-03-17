@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\ComponentAllocator.cpp" />
+    <ClCompile Include="src\Components\EntityAllocator.cpp" />
+    <ClCompile Include="src\Components\Spawners.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\Components.h" />
+    <ClInclude Include="src\Components\Spawners.h" />
     <ClInclude Include="src\StaticVector.h" />
     <ClInclude Include="src\Systems\InputSystem.cpp" />
     <ClInclude Include="src\Systems\MoveSystem.cpp" />

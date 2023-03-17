@@ -23,6 +23,12 @@
     <ClCompile Include="src\Components\ComponentAllocator.cpp">
       <Filter>Pliki źródłowe\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\EntityAllocator.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\Spawners.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Systems\RenderSystem.cpp">
@@ -45,6 +51,9 @@
     </ClInclude>
     <ClInclude Include="src\StaticVector.h">
       <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Spawners.h">
+      <Filter>Pliki źródłowe\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
