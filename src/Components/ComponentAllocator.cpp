@@ -1,6 +1,5 @@
 #include "Components.h"
 #include <assert.h>
-
 #include <cstring>
 
 ComponentAllocator::~ComponentAllocator()

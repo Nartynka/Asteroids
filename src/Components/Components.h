@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Vec2.h"
-#include "StaticVector.h"
+#include "HandleStaticVector.h"
 
 enum Components
 {
@@ -44,8 +44,8 @@ public:
 	void DestroyMovementComponent(int idx);
 	void DestroyTextureComponent(int idx);
 
-	StaticVector<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
-	StaticVector<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
+	HandleStaticVector<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
+	HandleStaticVector<TextureComponent, MAX_COMPONENT_COUNT> texture_components;
 
 private:
 	~ComponentAllocator();
@@ -60,7 +60,7 @@ public:
 	int CreateEntity();
 	void DestroyEntity(int idx);
 
-	StaticVector<Entity, MAX_ENTITY_COUNT> entities;
+	HandleStaticVector<Entity, MAX_ENTITY_COUNT> entities;
 private:
 	~EntityAllocator();
 	static EntityAllocator* allocator;

@@ -55,5 +55,8 @@
     <ClInclude Include="src\Components\Spawners.h">
       <Filter>Pliki źródłowe\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\HandleStaticVector.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

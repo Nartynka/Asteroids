@@ -17,6 +17,16 @@ public:
 		return data_size;
 	}
 
+	size_t capacity()
+	{
+		return max_capacity;
+	}
+
+	bool is_full()
+	{
+		return data_size == max_capacity;
+	}
+
 	int push_back(T& element)
 	{
 		assert(data_size < max_capacity && "Data array is full");
@@ -45,6 +55,14 @@ public:
 	T* data()
 	{
 		return &data_array[0];
+	}
+
+	void fill(T value)
+	{
+		for (T& e : data_array)
+		{
+			e = value;
+		}
 	}
 
 private:

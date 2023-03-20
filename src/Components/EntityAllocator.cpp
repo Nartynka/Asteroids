@@ -19,7 +19,7 @@ EntityAllocator* EntityAllocator::Get()
 
 int EntityAllocator::CreateEntity()
 {
-	unsigned int idx = entities.size();
+	unsigned int idx = (int)entities.size();
 	return entities.push_back({ idx });
 }
 
