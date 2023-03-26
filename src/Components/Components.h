@@ -18,6 +18,8 @@ struct MovementComponent
 {
 	Vec2 position = {};
 	Vec2 velocity = {};
+	float rotation = 0.f;
+	bool is_rotating = false;
 };
 
 struct TextureComponent
@@ -25,6 +27,7 @@ struct TextureComponent
 	char texture_path[64];
 	struct SDL_Texture* texture;
 	Vec2 size = {};
+	float tex_rotation = 0.f;
 };
 
 struct Entity
@@ -38,7 +41,7 @@ class ComponentAllocator
 public:
 	static ComponentAllocator* Get();
 
-	int CreateMovementComponent(unsigned int idx, Vec2 position, Vec2 velocity);
+	int CreateMovementComponent(unsigned int idx, Vec2 position, Vec2 velocity, float rotation, bool is_rotating=false);
 	int CreateTextureComponent(unsigned int idx, const char* path);
 
 	void DestroyMovementComponent(int idx);

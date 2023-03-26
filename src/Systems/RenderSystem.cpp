@@ -36,8 +36,8 @@ void render(SDL_Renderer* renderer, TextureComponent* tex_components, MovementCo
 			tex->texture = load_texture(renderer, tex->texture_path, tex->size);
 		}
 
-		SDL_Rect a = { (int)mov->position.x, (int)mov->position.y, (int)tex->size.x, (int)tex->size.y };
-		SDL_RenderCopy(renderer, tex->texture, NULL, &a);
+		SDL_Rect dest_rect = { (int)mov->position.x, (int)mov->position.y, (int)tex->size.x, (int)tex->size.y };
+		SDL_RenderCopyEx(renderer, tex->texture, NULL, &dest_rect, mov_components[i].rotation, NULL, SDL_FLIP_NONE);
 	}
 
 	SDL_RenderPresent(renderer);

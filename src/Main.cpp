@@ -39,7 +39,7 @@ int main(int argc, char* args[])
 	int player_mov_comp_idx = entity_alloc->entities[player_idx].comp_ids[Components::MOVEMENT_COMPONENT];
 
 	//Asteroid
-	CreateAsteroid({ 100, 200 }, { 0.1f, 0.1f });
+	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true);
 
 	bool quit = false;
 	SDL_Event event;
@@ -56,6 +56,8 @@ int main(int argc, char* args[])
 			{
 				if (event.type == SDL_QUIT)
 					quit = true;
+				if (event.type == SDL_KEYDOWN && event.key.repeat == 0 && event.key.keysym.sym == SDLK_SPACE)
+					CreateProjectile(comp_alloc->movement_components[player_mov_comp_idx].position, comp_alloc->movement_components[player_mov_comp_idx].rotation);
 			}
 
 			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary

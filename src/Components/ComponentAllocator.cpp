@@ -20,10 +20,10 @@ ComponentAllocator* ComponentAllocator::Get()
 	return allocator;
 }
 
-int ComponentAllocator::CreateMovementComponent(unsigned int idx, Vec2 position, Vec2 velocity)
+int ComponentAllocator::CreateMovementComponent(unsigned int idx, Vec2 position, Vec2 velocity, float rotation, bool is_rotating)
 {
 	assert(movement_components.size() < MAX_COMPONENT_COUNT && "Maximum number of MovementComponents reached!");
-	int mov_idx = movement_components.push_back({ position, velocity });
+	int mov_idx = movement_components.push_back({ position, velocity, rotation, is_rotating });
 
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 	entity_alloc->entities[idx].comp_ids[Components::MOVEMENT_COMPONENT] = mov_idx;
