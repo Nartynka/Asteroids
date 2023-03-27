@@ -97,5 +97,5 @@ public:
 
 private:
 	StaticVector<T, MAX_SIZE> elements;
-	int handle_map[MAX_SIZE];
+	int handle_map[MAX_SIZE] = {};
 };

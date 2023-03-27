@@ -7,7 +7,7 @@ static EntityAllocator* entity_alloc = EntityAllocator::Get();
 int CreateAsteroid(Vec2 position, Vec2 velocity, float rotation, bool is_rotating)
 {
 	int idx = entity_alloc->CreateEntity();
-	comp_alloc->CreateMovementComponent(idx, position, velocity, rotation, true);
+	comp_alloc->CreateMovementComponent(idx, position, velocity, rotation, is_rotating);
 	comp_alloc->CreateTextureComponent(idx, "res/asteroids/asteroid-1.png");
 
 	return idx;
