@@ -15,6 +15,9 @@
     <Filter Include="Pliki źródłowe\Components">
       <UniqueIdentifier>{a445d2b8-8806-4888-a2e3-9260539b3509}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki źródłowe\Entity">
+      <UniqueIdentifier>{c88cec22-95ce-42ca-a8a4-248895c824dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -23,23 +26,23 @@
     <ClCompile Include="src\Components\ComponentAllocator.cpp">
       <Filter>Pliki źródłowe\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\EntityAllocator.cpp">
-      <Filter>Pliki źródłowe\Components</Filter>
+    <ClCompile Include="src\Entity\EntityAllocator.cpp">
+      <Filter>Pliki źródłowe\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Spawners.cpp">
-      <Filter>Pliki źródłowe\Components</Filter>
+    <ClCompile Include="src\Entity\Spawners.cpp">
+      <Filter>Pliki źródłowe\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\InputSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\MoveSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\RenderSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Systems\RenderSystem.cpp">
-      <Filter>Pliki źródłowe\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Systems\MoveSystem.cpp">
-      <Filter>Pliki źródłowe\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Systems\InputSystem.cpp">
-      <Filter>Pliki źródłowe\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="src\Components\Components.h">
       <Filter>Pliki źródłowe\Components</Filter>
     </ClInclude>
@@ -52,11 +55,14 @@
     <ClInclude Include="src\StaticVector.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Spawners.h">
-      <Filter>Pliki źródłowe\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\HandleStaticVector.h">
       <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity\Entity.h">
+      <Filter>Pliki źródłowe\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity\Spawners.h">
+      <Filter>Pliki źródłowe\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

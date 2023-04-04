@@ -1,20 +1,28 @@
 #include "Systems.h"
-#include <stdio.h>
+#include <Components/Components.h>
+#include <Entity/Entity.h>
 
 //@TODO: These don't belong here
 const int SPEED = 300;
-const int SCREEN_WIDTH = 1080;
-const int SCREEN_HEIGHT = 720;
 
 //@TODO: For now we can once again leave the screen
-void move(MovementComponent* mov_components, size_t count, float dt)
+void move(float dt)
 {
-	for (unsigned int i = 0; i < count; i++)
-	{
-		mov_components[i].position.x += mov_components[i].velocity.x * SPEED * dt;
-		mov_components[i].position.y += mov_components[i].velocity.y * SPEED * dt;
+	EntityAllocator* entity_alloc = EntityAllocator::Get();
+	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
 
-		if(mov_components[i].is_rotating)
-			mov_components[i].rotation += dt * 100;
+	for (unsigned int i = 0; i < entity_alloc->entities.size(); i++)
+	{
+		int mov_comp_id = entity_alloc->entities[i].comp_ids[Components::MOVEMENT_COMPONENT];
+		if (mov_comp_id != -1)
+		{
+			MovementComponent mov_comp = comp_alloc->movement_components[mov_comp_id];
+			entity_alloc->entities[i].position.x += mov_comp.velocity.x * SPEED * dt;
+			entity_alloc->entities[i].position.y += mov_comp.velocity.y * SPEED * dt;
+		}
+
+		if (entity_alloc->entities[i].is_rotating)
+			entity_alloc->entities[i].rotation += dt * 100;
 	}
+
 }

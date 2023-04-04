@@ -20,18 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\ComponentAllocator.cpp" />
-    <ClCompile Include="src\Components\EntityAllocator.cpp" />
-    <ClCompile Include="src\Components\Spawners.cpp" />
+    <ClCompile Include="src\Entity\EntityAllocator.cpp" />
+    <ClCompile Include="src\Entity\Spawners.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Systems\InputSystem.cpp" />
+    <ClCompile Include="src\Systems\MoveSystem.cpp" />
+    <ClCompile Include="src\Systems\RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\Components.h" />
-    <ClInclude Include="src\Components\Spawners.h" />
+    <ClInclude Include="src\Entity\Entity.h" />
+    <ClInclude Include="src\Entity\Spawners.h" />
     <ClInclude Include="src\HandleStaticVector.h" />
     <ClInclude Include="src\StaticVector.h" />
-    <ClInclude Include="src\Systems\InputSystem.cpp" />
-    <ClInclude Include="src\Systems\MoveSystem.cpp" />
-    <ClInclude Include="src\Systems\RenderSystem.cpp" />
     <ClInclude Include="src\Systems\Systems.h" />
     <ClInclude Include="src\Vec2.h" />
   </ItemGroup>

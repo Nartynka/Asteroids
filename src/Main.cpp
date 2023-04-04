@@ -2,14 +2,16 @@
 #include <SDL_image.h>
 
 #include "Components/Components.h"
-#include "Components/Spawners.h"
+#include "Entity/Entity.h"
 
-#include "Systems/InputSystem.cpp"
-#include "Systems/MoveSystem.cpp"
-#include "Systems/RenderSystem.cpp"
+#include "Entity/Spawners.h"
+#include "Systems/Systems.h"
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
+
+const int SCREEN_WIDTH = 1080;
+const int SCREEN_HEIGHT = 720;
 
 int main(int argc, char* args[])
 {
@@ -31,16 +33,13 @@ int main(int argc, char* args[])
 	result = IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG;
 	assert(result && "SDL_image could not initialize!");
 
-	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 
 	//Player
 	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
-	int player_mov_comp_idx = entity_alloc->entities[player_idx].comp_ids[Components::MOVEMENT_COMPONENT];
 
 	//Asteroid
 	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true);
-
 	bool quit = false;
 	SDL_Event event;
 
@@ -57,13 +56,13 @@ int main(int argc, char* args[])
 				if (event.type == SDL_QUIT)
 					quit = true;
 				if (event.type == SDL_KEYDOWN && event.key.repeat == 0 && event.key.keysym.sym == SDLK_SPACE)
-					CreateProjectile(comp_alloc->movement_components[player_mov_comp_idx].position, comp_alloc->movement_components[player_mov_comp_idx].rotation);
+					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].rotation);
 			}
 
 			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary
-			handle_input(&comp_alloc->movement_components[player_mov_comp_idx], 1);
-			move(comp_alloc->movement_components.data(), comp_alloc->movement_components.size(), dt);
-			render(renderer, comp_alloc->texture_components.data(), comp_alloc->movement_components.data(), comp_alloc->movement_components.size());
+			handle_input(player_idx);
+			move(dt);
+			render(renderer, entity_alloc->entities.size());
 
 			lastTime = (float)SDL_GetTicks();
 		}

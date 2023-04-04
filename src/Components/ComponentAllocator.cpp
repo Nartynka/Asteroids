@@ -1,4 +1,5 @@
 #include "Components.h"
+#include "Entity/Entity.h"
 #include <assert.h>
 #include <cstring>
 
@@ -20,10 +21,10 @@ ComponentAllocator* ComponentAllocator::Get()
 	return allocator;
 }
 
-int ComponentAllocator::CreateMovementComponent(unsigned int idx, Vec2 position, Vec2 velocity, float rotation, bool is_rotating)
+int ComponentAllocator::CreateMovementComponent(unsigned int idx, Vec2 velocity)
 {
 	assert(movement_components.size() < MAX_COMPONENT_COUNT && "Maximum number of MovementComponents reached!");
-	int mov_idx = movement_components.push_back({ position, velocity, rotation, is_rotating });
+	int mov_idx = movement_components.push_back({ velocity });
 
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 	entity_alloc->entities[idx].comp_ids[Components::MOVEMENT_COMPONENT] = mov_idx;
@@ -31,28 +32,7 @@ int ComponentAllocator::CreateMovementComponent(unsigned int idx, Vec2 position,
 	return mov_idx;
 }
 
-
-int ComponentAllocator::CreateTextureComponent(unsigned int idx, const char* path)
-{
-	assert(texture_components.size() < MAX_COMPONENT_COUNT && "Maximum number of TextureComponents reached!");
-
-	int tex_idx = texture_components.push_back({});
-	size_t len = strlen(path) + 1;
-	assert(len < 64 && "Path for texture longer than 64 characters");
-	strncpy_s(texture_components[idx].texture_path, path, len);
-
-	EntityAllocator* entity_alloc = EntityAllocator::Get();
-	entity_alloc->entities[idx].comp_ids[Components::RENDER_COMPONENT] = tex_idx;
-
-	return tex_idx;
-}
-
 void ComponentAllocator::DestroyMovementComponent(int idx)
 {
 	movement_components.erase(idx);
-}
-
-void ComponentAllocator::DestroyTextureComponent(int idx)
-{
-	texture_components.erase(idx);
 }

@@ -1,5 +1,8 @@
 #include "Systems.h"
 #include <SDL_image.h>
+#include <cassert>
+#include <Vec2.h>
+#include <Entity/Entity.h>
 
 SDL_Texture* load_texture(SDL_Renderer* renderer, const char* path, Vec2& size)
 {
@@ -20,24 +23,25 @@ SDL_Texture* load_texture(SDL_Renderer* renderer, const char* path, Vec2& size)
 //@TODO: Multiple problems here:
 // TextureComponents and MovementComponents are separate arrays, every loop will be two cache misses
 // There is no guarantee that the same index will be for both Movement and Texture Components
-void render(SDL_Renderer* renderer, TextureComponent* tex_components, MovementComponent* mov_components, size_t count)
+void render(SDL_Renderer* renderer, size_t count)
 {
 	SDL_RenderClear(renderer);
 
+	EntityAllocator* entity_alloc = EntityAllocator::Get();
+
 	for (unsigned int i = 0; i < count; i++)
 	{
-		TextureComponent* tex = &tex_components[i];
-		MovementComponent* mov = &mov_components[i];
+		Entity entity = entity_alloc->entities[i];
 
 		//@TODO: No if's in tight loops. This should be properly handled by resource management of some sorts
 		// Also it's not rendering system's responsibility to load resources
-		if (!tex->texture)
+		if (!entity.texture)
 		{
-			tex->texture = load_texture(renderer, tex->texture_path, tex->size);
+			entity.texture = load_texture(renderer, entity.texture_path, entity.size);
 		}
 
-		SDL_Rect dest_rect = { (int)mov->position.x, (int)mov->position.y, (int)tex->size.x, (int)tex->size.y };
-		SDL_RenderCopyEx(renderer, tex->texture, NULL, &dest_rect, mov_components[i].rotation, NULL, SDL_FLIP_NONE);
+		SDL_Rect dest_rect = { (int)entity.position.x, (int)entity.position.y, (int)entity.size.x, (int)entity.size.y };
+		SDL_RenderCopyEx(renderer, entity.texture, NULL, &dest_rect, entity.rotation, NULL, SDL_FLIP_NONE);
 	}
 
 	SDL_RenderPresent(renderer);
