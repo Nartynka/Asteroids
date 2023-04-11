@@ -23,6 +23,7 @@
     <ClCompile Include="src\Entity\EntityAllocator.cpp" />
     <ClCompile Include="src\Entity\Spawners.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Systems\CollisionSystem.cpp" />
     <ClCompile Include="src\Systems\InputSystem.cpp" />
     <ClCompile Include="src\Systems\MoveSystem.cpp" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />

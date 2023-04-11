@@ -11,12 +11,15 @@ struct Entity
 	float rotation = 0.f;
 	bool is_rotating = false;
 
+	// physics/collision
+	float radius = 0;
+	Vec2 center = {};
+
 	// visuals
 	char texture_path[64];
 	struct SDL_Texture* texture;
-
-	// physics/collision
 	Vec2 size = {};
+
 
 	int comp_ids[Components::COUNT];
 };
@@ -26,7 +29,7 @@ class EntityAllocator
 public:
 	static EntityAllocator* Get();
 
-	int CreateEntity(Vec2 position, const char* path, float rotation = 0.f, bool is_rotating = false);
+	int CreateEntity(Vec2 position, const char* path, struct SDL_Renderer* renderer, float radius, float rotation = 0.f, bool is_rotating = false);
 	void DestroyEntity(int idx);
 
 	HandleStaticVector<Entity, MAX_ENTITY_COUNT> entities;

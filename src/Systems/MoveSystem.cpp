@@ -14,12 +14,14 @@ void move(float dt)
 	for (unsigned int i = 0; i < entity_alloc->entities.size(); i++)
 	{
 		int mov_comp_id = entity_alloc->entities[i].comp_ids[Components::MOVEMENT_COMPONENT];
-		if (mov_comp_id != -1)
-		{
-			MovementComponent mov_comp = comp_alloc->movement_components[mov_comp_id];
-			entity_alloc->entities[i].position.x += mov_comp.velocity.x * SPEED * dt;
-			entity_alloc->entities[i].position.y += mov_comp.velocity.y * SPEED * dt;
-		}
+		if (mov_comp_id == -1)
+			continue;
+
+		MovementComponent mov_comp = comp_alloc->movement_components[mov_comp_id];
+		entity_alloc->entities[i].position.x += mov_comp.velocity.x * SPEED * dt;
+		entity_alloc->entities[i].position.y += mov_comp.velocity.y * SPEED * dt;
+
+		entity_alloc->entities[i].center += {mov_comp.velocity.x * SPEED * dt, mov_comp.velocity.y * SPEED * dt };
 
 		if (entity_alloc->entities[i].is_rotating)
 			entity_alloc->entities[i].rotation += dt * 100;

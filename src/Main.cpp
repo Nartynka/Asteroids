@@ -34,12 +34,13 @@ int main(int argc, char* args[])
 	assert(result && "SDL_image could not initialize!");
 
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
+	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
 
 	//Player
-	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
+	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, renderer);
 
 	//Asteroid
-	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true);
+	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
 	bool quit = false;
 	SDL_Event event;
 
@@ -56,14 +57,15 @@ int main(int argc, char* args[])
 				if (event.type == SDL_QUIT)
 					quit = true;
 				if (event.type == SDL_KEYDOWN && event.key.repeat == 0 && event.key.keysym.sym == SDLK_SPACE)
-					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].rotation);
+					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].rotation, renderer);
 			}
 
 			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary
 			handle_input(player_idx);
 			move(dt);
-			render(renderer, entity_alloc->entities.size());
-
+			check_collision();
+			render(renderer);
+			
 			lastTime = (float)SDL_GetTicks();
 		}
 	}

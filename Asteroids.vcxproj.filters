@@ -41,6 +41,9 @@
     <ClCompile Include="src\Systems\RenderSystem.cpp">
       <Filter>Pliki źródłowe\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\Systems\CollisionSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\Components.h">

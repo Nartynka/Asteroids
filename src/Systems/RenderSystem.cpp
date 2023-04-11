@@ -4,46 +4,60 @@
 #include <Vec2.h>
 #include <Entity/Entity.h>
 
-SDL_Texture* load_texture(SDL_Renderer* renderer, const char* path, Vec2& size)
+// midpoint circle algorithm for drawing circles
+void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 {
-	SDL_Texture* new_texture = NULL;
-	SDL_Surface* loaded_surface = IMG_Load(path);
-	assert(loaded_surface != nullptr && "Unable to load image\n");
+	float x0 = center.x;
+	float y0 = center.y;
 
-	new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
-	assert(new_texture != nullptr && "Unable to create texture from image\n");
+	int x = radius - 1;
+	int y = 0;
+	int dx = 1;
+	int dy = 1;
+	int error = dx - (radius << 1);
 
-	size = { (float)(loaded_surface->w), (float)loaded_surface->h };
+	while (x >= y) {
+		SDL_RenderDrawPoint(renderer, x0 + x, y0 + y);
+		SDL_RenderDrawPoint(renderer, x0 + y, y0 + x);
+		SDL_RenderDrawPoint(renderer, x0 - y, y0 + x);
+		SDL_RenderDrawPoint(renderer, x0 - x, y0 + y);
+		SDL_RenderDrawPoint(renderer, x0 - x, y0 - y);
+		SDL_RenderDrawPoint(renderer, x0 - y, y0 - x);
+		SDL_RenderDrawPoint(renderer, x0 + y, y0 - x);
+		SDL_RenderDrawPoint(renderer, x0 + x, y0 - y);
 
-	SDL_FreeSurface(loaded_surface);
-
-	return new_texture;
+		if (error <= 0) {
+			y++;
+			error += dy;
+			dy += 2;
+		}
+		if (error > 0) {
+			x--;
+			dx += 2;
+			error += dx - (radius << 1);
+		}
+	}
 }
 
-//@TODO: Multiple problems here:
-// TextureComponents and MovementComponents are separate arrays, every loop will be two cache misses
-// There is no guarantee that the same index will be for both Movement and Texture Components
-void render(SDL_Renderer* renderer, size_t count)
+void render(SDL_Renderer* renderer)
 {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
+	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
 
-	for (unsigned int i = 0; i < count; i++)
+	for (unsigned int i = 0; i < entity_alloc->entities.size(); i++)
 	{
-		Entity entity = entity_alloc->entities[i];
-
-		//@TODO: No if's in tight loops. This should be properly handled by resource management of some sorts
-		// Also it's not rendering system's responsibility to load resources
-		if (!entity.texture)
-		{
-			entity.texture = load_texture(renderer, entity.texture_path, entity.size);
-		}
+		Entity& entity = entity_alloc->entities[i];
 
 		SDL_Rect dest_rect = { (int)entity.position.x, (int)entity.position.y, (int)entity.size.x, (int)entity.size.y };
 		SDL_RenderCopyEx(renderer, entity.texture, NULL, &dest_rect, entity.rotation, NULL, SDL_FLIP_NONE);
+
+		// debug collision circles
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+		draw_circle(renderer, entity.center, entity.radius);
 	}
 
 	SDL_RenderPresent(renderer);
 }
-
