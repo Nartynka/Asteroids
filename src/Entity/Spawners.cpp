@@ -20,9 +20,7 @@ int CreatePlayer(Vec2 position, SDL_Renderer* renderer)
 	return idx;
 }
 
-constexpr float M_PI = 3.14159265358979323846;
-
-int CreateProjectile(Vec2 shooter_pos, float shooter_rotation, SDL_Renderer* renderer)
+int CreateProjectile(Vec2 shooter_pos, Vec2 shooter_size, float shooter_rotation, SDL_Renderer* renderer)
 {
 	int idx = entity_alloc->entities.size();
 
@@ -32,10 +30,21 @@ int CreateProjectile(Vec2 shooter_pos, float shooter_rotation, SDL_Renderer* ren
 	// calculate shooter forward vector
 	Vec2 forward_vec = { sin(rotation), -cos(rotation) };
 	// add some speed so that bullets will be faster than the shooter
-	Vec2 forward_vel = { forward_vec.x * 2, forward_vec.y * 2 };
+	Vec2 forward_vel = { forward_vec.x * 1, forward_vec.y * 1 };
 
-	// shooter_pos = { shooter_pos.x + (15 * forward_vec.x), shooter_pos.y - (15 * forward_vec.y) };
-	entity_alloc->CreateEntity(shooter_pos, "res/bullet.png", renderer, 10.f, shooter_rotation);
+	// Calculate the offset from the center of the shooter to the firing point
+	float distance = shooter_size.y-4.f;
+	float offset_x = distance * sin(rotation);
+	float offset_y = distance * -cos(rotation);
+
+	// Calculate the firing point
+	Vec2 firing_point = {
+		shooter_pos.x + shooter_size.x / 2 + offset_x,
+		shooter_pos.y + shooter_size.y / 2 + offset_y
+	};
+
+	entity_alloc->CreateEntity(firing_point, "res/bullet.png", renderer, 10.f, shooter_rotation);
 	comp_alloc->CreateMovementComponent(idx, forward_vel);
+
 	return idx;
 }

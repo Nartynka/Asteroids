@@ -57,7 +57,7 @@ int main(int argc, char* args[])
 				if (event.type == SDL_QUIT)
 					quit = true;
 				if (event.type == SDL_KEYDOWN && event.key.repeat == 0 && event.key.keysym.sym == SDLK_SPACE)
-					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].rotation, renderer);
+					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].size, entity_alloc->entities[player_idx].rotation, renderer);
 			}
 
 			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary

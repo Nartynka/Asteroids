@@ -4,7 +4,6 @@
 #include <Vec2.h>
 #include <Entity/Entity.h>
 
-// midpoint circle algorithm for drawing circles
 void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 {
 	float x0 = center.x;
