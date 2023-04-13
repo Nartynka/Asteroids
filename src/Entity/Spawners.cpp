@@ -20,6 +20,8 @@ int CreatePlayer(Vec2 position, SDL_Renderer* renderer)
 	return idx;
 }
 
+constexpr float M_PI = 3.14159265358979323846;
+
 int CreateProjectile(Vec2 shooter_pos, Vec2 shooter_size, float shooter_rotation, SDL_Renderer* renderer)
 {
 	int idx = entity_alloc->entities.size();
