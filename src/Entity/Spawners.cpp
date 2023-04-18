@@ -7,25 +7,25 @@ static EntityAllocator* entity_alloc = EntityAllocator::Get();
 
 int CreateAsteroid(Vec2 position, Vec2 velocity, float rotation, bool is_rotating, SDL_Renderer* renderer)
 {
-	int idx = entity_alloc->CreateEntity(position, "res/asteroids/asteroid-1.png", renderer, 60.f, rotation, is_rotating);
-	comp_alloc->CreateMovementComponent(idx, velocity);
+	int entity_id = entity_alloc->CreateEntity(position, "res/asteroids/asteroid-1.png", renderer, 60.f, rotation, is_rotating);
+	comp_alloc->CreateMovementComponent(entity_id, velocity);
+	comp_alloc->CreateAsteroidComponent(entity_id);
 
-	return idx;
+	return entity_id;
 }
 
 int CreatePlayer(Vec2 position, SDL_Renderer* renderer)
 {
-	int idx = entity_alloc->CreateEntity(position, "res/ship.png", renderer, 45.f);
-	comp_alloc->CreateMovementComponent(idx, {});
-	return idx;
+	int entity_id = entity_alloc->CreateEntity(position, "res/ship.png", renderer, 45.f);
+	comp_alloc->CreateMovementComponent(entity_id, {});
+	comp_alloc->CreatePlayerComponent(entity_id);
+	return entity_id;
 }
 
 constexpr float M_PI = 3.14159265358979323846f;
 
 int CreateProjectile(Vec2 shooter_pos, Vec2 shooter_size, float shooter_rotation, SDL_Renderer* renderer)
 {
-	int idx = (int)entity_alloc->entities.size();
-
 	// deg to rad
 	float rotation = shooter_rotation * M_PI / 180;
 
@@ -45,8 +45,9 @@ int CreateProjectile(Vec2 shooter_pos, Vec2 shooter_size, float shooter_rotation
 		shooter_pos.y + shooter_size.y / 2 + offset_y
 	};
 
-	entity_alloc->CreateEntity(firing_point, "res/bullet.png", renderer, 10.f, shooter_rotation);
-	comp_alloc->CreateMovementComponent(idx, forward_vel);
+	int entity_id = entity_alloc->CreateEntity(firing_point, "res/bullet.png", renderer, 10.f, shooter_rotation);
+	comp_alloc->CreateMovementComponent(entity_id, forward_vel);
+	comp_alloc->CreateBulletComponent(entity_id);
 
-	return idx;
+	return entity_id;
 }

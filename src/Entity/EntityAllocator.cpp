@@ -37,27 +37,37 @@ SDL_Texture* load_texture(SDL_Renderer* renderer, const char* path, Vec2& size)
 
 int EntityAllocator::CreateEntity(Vec2 position, const char* path, SDL_Renderer* renderer, float radius, float rotation, bool is_rotating)
 {
-	unsigned int idx = (int)entities.size();
-
 	size_t len = strlen(path) + 1;
 	assert(len < 64 && "Path for texture longer than 64 characters");
-	entities.push_back({ idx, position, rotation, is_rotating, radius });
+	
+	unsigned int idx = entities.push_back({});
+
+	Entity& entity = entities[idx];
+
+	entity = { idx, position, rotation, is_rotating, radius };
 	// loading texture must be here, because otherwise the size and texture were only loaded at render
 	// and we need size for center of collision circle
-	entities[idx].texture = load_texture(renderer, path, entities[idx].size);
+	entity.texture = load_texture(renderer, path, entity.size);
 
-	Vec2 center = { entities[idx].position.x + (entities[idx].size.x / 2), entities[idx].position.y + (entities[idx].size.y / 2) };
-	entities[idx].center = center;
+	Vec2 center = { entity.position.x + (entity.size.x / 2), entity.position.y + (entity.size.y / 2) };
+	entity.center = center;
 
 	// if we are loading texture here, is path to file still needed?
-	strncpy_s(entities[idx].texture_path, path, len);
+	strncpy_s(entity.texture_path, path, len);
+
+	for (int i = 0; i < Components::COUNT; i++)
+	{
+		entity.comp_ids[i] = -1;
+	}
 
 	return idx;
 }
 
-void EntityAllocator::DestroyEntity(int idx)
+void EntityAllocator::DestroyEntity(int entity_id)
 {
 	ComponentAllocator* comp_aloc = ComponentAllocator::Get();
-	comp_aloc->DestroyMovementComponent(entities[idx].comp_ids[Components::MOVEMENT_COMPONENT]);
-	entities.erase(idx);
+
+	// not every entity might have movement component?
+	comp_aloc->DestroyMovementComponent(entities[entity_id].comp_ids[Components::MOVEMENT_COMPONENT]);
+	entities.erase(entity_id);
 }

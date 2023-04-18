@@ -20,8 +20,11 @@ struct Entity
 	struct SDL_Texture* texture;
 	Vec2 size = {};
 
-
 	int comp_ids[Components::COUNT];
+
+	bool HasComponent(Components comp_id) {
+		return comp_ids[comp_id] != -1;
+	}
 };
 
 class EntityAllocator
@@ -30,7 +33,7 @@ public:
 	static EntityAllocator* Get();
 
 	int CreateEntity(Vec2 position, const char* path, struct SDL_Renderer* renderer, float radius, float rotation = 0.f, bool is_rotating = false);
-	void DestroyEntity(int idx);
+	void DestroyEntity(int entity_id);
 
 	HandleStaticVector<Entity, MAX_ENTITY_COUNT> entities;
 private:

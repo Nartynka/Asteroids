@@ -6,6 +6,9 @@
 enum Components
 {
 	MOVEMENT_COMPONENT,
+	PLAYER,
+	ASTEROID,
+	BULLET,
 	COUNT
 };
 
@@ -22,11 +25,18 @@ class ComponentAllocator
 public:
 	static ComponentAllocator* Get();
 
-	int CreateMovementComponent(unsigned int idx, Vec2 velocity);
-
-	void DestroyMovementComponent(int idx);
+	int CreateMovementComponent(int entity_id, Vec2 velocity);
+	void DestroyMovementComponent(int entity_id);
 
 	HandleStaticVector<MovementComponent, MAX_COMPONENT_COUNT> movement_components;
+
+	int CreatePlayerComponent(int entity_id);
+	int CreateAsteroidComponent(int entity_id);
+	int CreateBulletComponent(int entity_id);
+
+	void DestroyPlayerComponent(int entity_id);
+	void DestroyAsteroidComponent(int entity_id);
+	void DestroyBulletComponent(int entity_id);
 
 private:
 	~ComponentAllocator();
