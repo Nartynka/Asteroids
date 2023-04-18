@@ -66,7 +66,7 @@ public:
 		assert(elements.size() > 0 && "HandleStaticVector is empty!");
 
 		int data_idx = handle_map[handle];
-		int last_idx = elements.size() - 1;
+		int last_idx = (int)elements.size() - 1;
 		assert(data_idx != -1 && "Trying to erase already deleted element");
 
 		elements.erase(data_idx);

@@ -20,13 +20,13 @@ void handle_input(int player_idx)
 
 	if (currentKeyStates[SDL_SCANCODE_UP] || currentKeyStates[SDL_SCANCODE_W])
 	{
-		player_movement.velocity.y = -1.0 * cos(player.rotation * M_PI / 180.0);
-		player_movement.velocity.x = sin(player.rotation * M_PI / 180.0);
+		player_movement.velocity.y = -1.0f * (float)cos(player.rotation * M_PI / 180.0);
+		player_movement.velocity.x = (float)sin(player.rotation * M_PI / 180.0);
 	}
 	else if (currentKeyStates[SDL_SCANCODE_DOWN] || currentKeyStates[SDL_SCANCODE_S])
 	{
-		player_movement.velocity.y = 1.0 * cos(player.rotation * M_PI / 180.0);
-		player_movement.velocity.x = -sin(player.rotation * M_PI / 180.0);
+		player_movement.velocity.y = 1.0f * (float)cos(player.rotation * M_PI / 180.0);
+		player_movement.velocity.x = (float)-sin(player.rotation * M_PI / 180.0);
 	}
 	else
 	{

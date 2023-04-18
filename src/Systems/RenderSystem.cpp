@@ -6,8 +6,8 @@
 
 void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 {
-	float x0 = center.x;
-	float y0 = center.y;
+	int x0 = (int)center.x;
+	int y0 = (int)center.y;
 
 	int x = radius - 1;
 	int y = 0;
@@ -55,7 +55,7 @@ void render(SDL_Renderer* renderer)
 
 		// debug collision circles
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-		draw_circle(renderer, entity.center, entity.radius);
+		draw_circle(renderer, entity.center, (int)entity.radius);
 	}
 
 	SDL_RenderPresent(renderer);
