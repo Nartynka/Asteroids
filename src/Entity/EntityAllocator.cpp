@@ -63,11 +63,27 @@ int EntityAllocator::CreateEntity(Vec2 position, const char* path, SDL_Renderer*
 	return idx;
 }
 
-void EntityAllocator::DestroyEntity(int entity_id)
+void EntityAllocator::QueueDestroy(int entity_id)
 {
-	ComponentAllocator* comp_aloc = ComponentAllocator::Get();
+	queued_entities.push_back(entity_id);
+}
 
-	// not every entity might have movement component?
-	comp_aloc->DestroyMovementComponent(entities[entity_id].comp_ids[Components::MOVEMENT_COMPONENT]);
-	entities.erase(entity_id);
+void EntityAllocator::DestroyEntities()
+{
+	if (queued_entities.size() > 0)
+	{
+		ComponentAllocator* comp_aloc = ComponentAllocator::Get();
+
+		for (int i = 0; i < queued_entities.size(); i++)
+		{
+			int entity_id = queued_entities[i];
+			comp_aloc->DestroyMovementComponent(entity_id);
+			entities.erase(entity_id);
+		}
+
+		for (int i = queued_entities.size()-1; i >= 0; i--)
+		{
+			queued_entities.erase(i);
+		}
+	}
 }

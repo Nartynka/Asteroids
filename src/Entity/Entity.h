@@ -33,10 +33,13 @@ public:
 	static EntityAllocator* Get();
 
 	int CreateEntity(Vec2 position, const char* path, struct SDL_Renderer* renderer, float radius, float rotation = 0.f, bool is_rotating = false);
-	void DestroyEntity(int entity_id);
+
+	void QueueDestroy(int entity_id);
+	void DestroyEntities();
 
 	HandleStaticVector<Entity, MAX_ENTITY_COUNT> entities;
 private:
 	~EntityAllocator();
 	static EntityAllocator* allocator;
+	StaticVector<int, MAX_ENTITY_COUNT> queued_entities;
 };

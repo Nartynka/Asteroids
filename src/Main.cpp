@@ -38,7 +38,7 @@ int main(int argc, char* args[])
 
 	//Player
 	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, renderer);
-
+	
 	//Asteroid
 	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
 	bool quit = false;
@@ -65,6 +65,7 @@ int main(int argc, char* args[])
 			move(dt);
 			check_collision();
 			render(renderer);
+			entity_alloc->DestroyEntities();
 			
 			lastTime = (float)SDL_GetTicks();
 		}

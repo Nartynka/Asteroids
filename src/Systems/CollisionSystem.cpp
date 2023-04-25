@@ -11,15 +11,15 @@ bool check_collision()
 
 	for (int i = 0; i < count; i++)
 	{
-		Entity& entity_a = entity_alloc->entities[i];
+		Entity& entity_a = entity_alloc->entities.data()[i];
 
 		float x1 = entity_a.center.x;
 		float y1 = entity_a.center.y;
 		float r1 = entity_a.radius;
 
-		for (int j = i+1; j < count; j++)
+		for (int j = i + 1; j < count; j++)
 		{
-			Entity& entity_b = entity_alloc->entities[j];
+			Entity& entity_b = entity_alloc->entities.data()[j];
 
 			float x2 = entity_b.center.x;
 			float y2 = entity_b.center.y;
@@ -29,17 +29,17 @@ bool check_collision()
 			double result = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 			if (result < ((r1 + r2) * (r1 + r2)))
 			{
-				if (entity_b.HasComponent(Components::PLAYER))
+				if ((entity_a.HasComponent(Components::PLAYER) && entity_b.HasComponent(Components::ASTEROID)) || (entity_b.HasComponent(Components::PLAYER) && entity_a.HasComponent(Components::ASTEROID)))
 				{
-					printf("Collision with PLAYER!!!!\n");
+					printf("GAME OVER!!!!!!!!!!!\n");
+					entity_alloc->QueueDestroy(entity_a.id);
+					entity_alloc->QueueDestroy(entity_b.id);
 				}
-				else if (entity_b.HasComponent(Components::ASTEROID))
+				else if ((entity_a.HasComponent(Components::ASTEROID) && entity_b.HasComponent(Components::BULLET)) || (entity_b.HasComponent(Components::ASTEROID) && entity_a.HasComponent(Components::BULLET)))
 				{
-					printf("Collision with ASTEROID!!!!\n");
-				}
-				else if (entity_b.HasComponent(Components::BULLET))
-				{
-					printf("Collision with BULLET!!!!\n");
+					printf("Points++!!!!\n");
+					entity_alloc->QueueDestroy(entity_a.id);
+					entity_alloc->QueueDestroy(entity_b.id);
 				}
 			}
 		}

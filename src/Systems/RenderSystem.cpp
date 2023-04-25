@@ -48,7 +48,7 @@ void render(SDL_Renderer* renderer)
 
 	for (unsigned int i = 0; i < entity_alloc->entities.size(); i++)
 	{
-		Entity& entity = entity_alloc->entities[i];
+		Entity& entity = entity_alloc->entities.data()[i];
 
 		SDL_Rect dest_rect = { (int)entity.position.x, (int)entity.position.y, (int)entity.size.x, (int)entity.size.y };
 		SDL_RenderCopyEx(renderer, entity.texture, NULL, &dest_rect, entity.rotation, NULL, SDL_FLIP_NONE);

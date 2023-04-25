@@ -11,6 +11,11 @@ const int ROTATION_SPEED = 2;
 void handle_input(int player_idx)
 {
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
+	
+	// game over == crash becouse there was no player
+	if (!entity_alloc->entities.size())
+		return;
+
 	Entity& player = entity_alloc->entities[player_idx];
 
 	ComponentAllocator* comp_alloc = ComponentAllocator::Get();

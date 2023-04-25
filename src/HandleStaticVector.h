@@ -74,11 +74,11 @@ public:
 
 		if (data_idx < last_idx)
 		{
-			for (int& handle : handle_map)
+			for (int& mapped_idx : handle_map)
 			{
-				if (handle == last_idx)
+				if (mapped_idx == last_idx)
 				{
-					handle = data_idx;
+					mapped_idx = data_idx;
 					break;
 				}
 			}

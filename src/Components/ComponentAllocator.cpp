@@ -37,6 +37,7 @@ void ComponentAllocator::DestroyMovementComponent(int entity_id)
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 	Entity& entity = entity_alloc->entities[entity_id];
 	movement_components.erase(entity.comp_ids[Components::MOVEMENT_COMPONENT]);
+	entity.comp_ids[Components::MOVEMENT_COMPONENT] = -1;
 }
 
 int ComponentAllocator::CreatePlayerComponent(int entity_id)
