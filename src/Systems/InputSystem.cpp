@@ -1,6 +1,5 @@
 #include "Systems.h"
 #include <SDL.h>
-#include <Components/Components.h>
 #include "Entity/Entity.h"
 
 // This here becouse SDL operates on degrees and movement on radians
@@ -11,12 +10,10 @@ const int ROTATION_SPEED = 2;
 void handle_input(int player_idx)
 {
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
-	
-	// game over == crash becouse there was no player
-	if (!entity_alloc->entities.size())
-		return;
+	Entity& player = entity_alloc->entities.data()[player_idx];
 
-	Entity& player = entity_alloc->entities[player_idx];
+	if (!player.HasComponent(PLAYER))
+		return;
 
 	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
 	MovementComponent& player_movement = comp_alloc->movement_components[player.comp_ids[Components::MOVEMENT_COMPONENT]];

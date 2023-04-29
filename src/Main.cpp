@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "Components/Components.h"
 #include "Entity/Entity.h"
@@ -9,9 +10,6 @@
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
-
-const int SCREEN_WIDTH = 1080;
-const int SCREEN_HEIGHT = 720;
 
 int main(int argc, char* args[])
 {
@@ -33,6 +31,9 @@ int main(int argc, char* args[])
 	result = IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG;
 	assert(result && "SDL_image could not initialize!");
 
+	result = TTF_Init();
+	assert(result != -1 && "SDL_ttf could not initialize!");
+
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
 
@@ -41,6 +42,9 @@ int main(int argc, char* args[])
 	
 	//Asteroid
 	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
+	CreateAsteroid({ 200, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
+	CreateAsteroid({ 300, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
+	CreateAsteroid({ 400, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
 	bool quit = false;
 	SDL_Event event;
 

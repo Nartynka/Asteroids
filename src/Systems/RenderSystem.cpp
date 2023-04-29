@@ -1,8 +1,11 @@
 #include "Systems.h"
-#include <SDL_image.h>
-#include <cassert>
 #include <Vec2.h>
 #include <Entity/Entity.h>
+
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <string>
+#include <cassert>
 
 void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 {
@@ -38,6 +41,28 @@ void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 	}
 }
 
+void render_text(const char* path, std::string text, SDL_Renderer* renderer, int end_text = -1)
+{
+	TTF_Font* font = TTF_OpenFont(path, 24);
+	assert(font != nullptr && "Failed to load font!");
+
+	if (end_text >= 0)
+		text += std::to_string(end_text);
+
+	SDL_Texture* text_texture = NULL;
+	SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), { 255,255,255 });
+
+	assert(text_surface != NULL && "Unable to render text surface!");
+
+	text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
+	assert(text_texture != NULL && "Unable to create texture from rendered text!");
+
+	SDL_Rect text_dsrect = { (SCREEN_WIDTH / 2) - (text_surface->w / 2), 20, text_surface->w, text_surface->h };
+	SDL_FreeSurface(text_surface);
+
+	SDL_RenderCopy(renderer, text_texture, NULL, &text_dsrect);
+}
+
 void render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -58,5 +83,6 @@ void render(SDL_Renderer* renderer)
 		draw_circle(renderer, entity.center, (int)entity.radius);
 	}
 
+	render_text("res/fonts/PressStart.ttf", "Points: ", renderer, points);
 	SDL_RenderPresent(renderer);
 }

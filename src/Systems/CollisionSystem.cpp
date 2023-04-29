@@ -1,10 +1,10 @@
 #include "Systems.h"
-#include "Components/Components.h"
 #include <stdio.h>
 #include <Entity/Entity.h>
 
-// How to reacts to collision?
-bool check_collision()
+int points = 0;
+
+void check_collision()
 {
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 	size_t count = entity_alloc->entities.size();
@@ -37,12 +37,11 @@ bool check_collision()
 				}
 				else if ((entity_a.HasComponent(Components::ASTEROID) && entity_b.HasComponent(Components::BULLET)) || (entity_b.HasComponent(Components::ASTEROID) && entity_a.HasComponent(Components::BULLET)))
 				{
-					printf("Points++!!!!\n");
+					points++;
 					entity_alloc->QueueDestroy(entity_a.id);
 					entity_alloc->QueueDestroy(entity_b.id);
 				}
 			}
 		}
 	}
-	return true;
 }
