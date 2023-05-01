@@ -35,7 +35,7 @@ int CreateProjectile(Vec2 shooter_pos, Vec2 shooter_size, float shooter_rotation
 	Vec2 forward_vel = { forward_vec.x * 1, forward_vec.y * 1 };
 
 	// Calculate the offset from the center of the shooter to the firing point
-	float distance = shooter_size.y-4.f;
+	float distance = shooter_size.y - 4.f;
 	float offset_x = distance * (float)sin(rotation);
 	float offset_y = distance * (float)-cos(rotation);
 
@@ -50,4 +50,56 @@ int CreateProjectile(Vec2 shooter_pos, Vec2 shooter_size, float shooter_rotation
 	comp_alloc->CreateBulletComponent(entity_id);
 
 	return entity_id;
+}
+
+void RandomAsteroid(SDL_Renderer* renderer)
+{
+	// <-0.999.., 0.999..>
+	Vec2 vel = { (float)rand() / (float)RAND_MAX , (float)rand() / (float)RAND_MAX };
+	Vec2 pos;
+
+	bool spawn_on_x = rand() % 2;
+	if (spawn_on_x)
+	{
+		int pos_x = rand() % 1000;
+		int pos_y = (rand() % 2) ? 700 : 0;
+		// pos.y == 0 then vel must be positive
+		// pos.y == 700 then vel must be negative
+
+		// which is better?
+		//vel.y = pos_y ? -abs(vel.y) : abs(vel.y);
+
+		if (pos_y)
+			vel.y = -abs(vel.y);
+		else
+			vel.y = abs(vel.y);
+
+		pos = { (float)pos_x, (float)pos_y };
+	}
+	else
+	{
+		int pos_x = (rand() % 2) ? 1000 : 0;
+		int pos_y = rand() % 700;
+		// pos.x == 0 then vel must be positive
+		// pos.x == 1000 then vel must be negative
+
+		// which is better?
+		// vel.x = pos_x ? -abs(vel.x) : abs(vel.x);
+
+		if (pos_x)
+			vel.x = -abs(vel.x);
+		else
+			vel.x = abs(vel.x);
+
+		pos = { (float)pos_x, (float)pos_y };
+	}
+
+	if (pos.y > 500 && vel.y > 0)
+		vel.y = -vel.y;
+	if (pos.x > 800 && vel.x > 0)
+		vel.x = -vel.x;
+
+	int rotation = (rand() % 180) + 1;
+
+	CreateAsteroid(pos, vel, (float)rotation, true, renderer);
 }

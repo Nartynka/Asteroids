@@ -1,10 +1,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <time.h>
 
-#include "Components/Components.h"
 #include "Entity/Entity.h"
-
 #include "Entity/Spawners.h"
 #include "Systems/Systems.h"
 
@@ -17,6 +16,8 @@ int main(int argc, char* args[])
 	float dt = (float)(SDL_GetTicks() / 1000.f);
 	float lastTime = 0.f;
 	const float DESIRED_DT = 1 / 60.f; // 60 FPS
+
+	srand(time(NULL));
 
 	//@TODO: Initialization of SDL should be a part of some system initalization
 	int result = SDL_Init(SDL_INIT_VIDEO);
@@ -41,10 +42,11 @@ int main(int argc, char* args[])
 	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, renderer);
 	
 	//Asteroid
-	CreateAsteroid({ 100, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
-	CreateAsteroid({ 200, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
-	CreateAsteroid({ 300, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
-	CreateAsteroid({ 400, 200 }, { 0.1f, 0.2f }, 70.f, true, renderer);
+	//CreateAsteroid({ 100, 200 }, { 0.2f, -0.2f }, 70.f, true, renderer);
+
+	// spawn asteroid ever 1 second
+	float asteroidTimeout = 0.f;
+
 	bool quit = false;
 	SDL_Event event;
 
@@ -64,6 +66,14 @@ int main(int argc, char* args[])
 					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].size, entity_alloc->entities[player_idx].rotation, renderer);
 			}
 
+			if (asteroidTimeout >= 1.f)
+			{
+				RandomAsteroid(renderer);
+				asteroidTimeout = 0.f;
+			}
+			else
+				asteroidTimeout += dt;
+			
 			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary
 			handle_input(player_idx);
 			move(dt);

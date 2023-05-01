@@ -42,7 +42,7 @@ void check_visibility(EntityAllocator* entity_alloc, Entity& entity, MovementCom
 			entity.position -= mov_comp.velocity * SPEED * dt;
 		}
 	}
-	else if (entity.position.x < 0 || entity.position.x > SCREEN_WIDTH || entity.position.y < 0 || entity.position.y > SCREEN_HEIGHT)
+	else if (entity.position.x < -entity.size.x || entity.position.x > SCREEN_WIDTH || entity.position.y < -entity.size.y || entity.position.y > SCREEN_HEIGHT)
 	{
 		printf("Destroying something!!\n");
 		entity_alloc->QueueDestroy(entity.id);
