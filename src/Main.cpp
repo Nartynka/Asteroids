@@ -40,9 +40,6 @@ int main(int argc, char* args[])
 
 	//Player
 	int player_idx = CreatePlayer({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, renderer);
-	
-	//Asteroid
-	//CreateAsteroid({ 100, 200 }, { 0.2f, -0.2f }, 70.f, true, renderer);
 
 	// spawn asteroid ever 1 second
 	float asteroidTimeout = 0.f;
@@ -62,25 +59,38 @@ int main(int argc, char* args[])
 			{
 				if (event.type == SDL_QUIT)
 					quit = true;
-				if (event.type == SDL_KEYDOWN && event.key.repeat == 0 && event.key.keysym.sym == SDLK_SPACE)
+
+				else if (!game_over && event.type == SDL_KEYDOWN && event.key.repeat == 0 && event.key.keysym.sym == SDLK_SPACE)
 					CreateProjectile(entity_alloc->entities[player_idx].position, entity_alloc->entities[player_idx].size, entity_alloc->entities[player_idx].rotation, renderer);
 			}
 
-			if (asteroidTimeout >= 1.f)
+			if (!game_over)
 			{
-				RandomAsteroid(renderer);
-				asteroidTimeout = 0.f;
+				if (asteroidTimeout >= 1.f)
+				{
+					RandomAsteroid(renderer);
+					asteroidTimeout = 0.f;
+				}
+				else
+				{
+					asteroidTimeout += dt;
+				}
+
+				handle_input(player_idx);
+				move(dt);
+				check_collision();
+				entity_alloc->DestroyEntities();
 			}
-			else
-				asteroidTimeout += dt;
 			
-			//TODO: Manually providing player's MovComp. Once it operates on InputComponents, will no longer be necessary
-			handle_input(player_idx);
-			move(dt);
-			check_collision();
+			// Points text
+			queue_text_surface("Points: " + std::to_string(points));
+			if(game_over)
+			{
+				queue_text_surface("GAME OVER!!");
+			}
+			
 			render(renderer);
-			entity_alloc->DestroyEntities();
-			
+
 			lastTime = (float)SDL_GetTicks();
 		}
 	}

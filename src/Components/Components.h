@@ -12,8 +12,8 @@ enum Components
 	COUNT
 };
 
-constexpr int MAX_COMPONENT_COUNT = 16;
-constexpr int MAX_ENTITY_COUNT = 16;
+constexpr int MAX_COMPONENT_COUNT = 64;
+constexpr int MAX_ENTITY_COUNT = 64;
 
 struct MovementComponent
 {
