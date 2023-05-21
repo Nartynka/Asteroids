@@ -9,6 +9,7 @@
 
 StaticVector<SDL_Surface*, 16> queued_text_surfaces;
 
+#ifdef _DEBUG
 void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 {
 	int x0 = (int)center.x;
@@ -42,6 +43,7 @@ void draw_circle(SDL_Renderer* renderer, Vec2 center, int radius)
 		}
 	}
 }
+#endif
 
 void queue_text_surface(std::string&& text)
 {
@@ -87,9 +89,11 @@ void render(SDL_Renderer* renderer)
 		SDL_Rect dest_rect = { (int)entity.position.x, (int)entity.position.y, (int)entity.size.x, (int)entity.size.y };
 		SDL_RenderCopyEx(renderer, entity.texture, NULL, &dest_rect, entity.rotation, NULL, SDL_FLIP_NONE);
 
+#ifdef _DEBUG
 		// debug collision circles
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 		draw_circle(renderer, entity.center, (int)entity.radius);
+#endif
 	}
 
 	render_text(renderer);

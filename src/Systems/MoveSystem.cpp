@@ -1,6 +1,5 @@
 #include "Systems.h"
 #include <Entity/Entity.h>
-#include <stdio.h>
 
 const int SPEED = 300;
 
@@ -38,13 +37,11 @@ void check_visibility(EntityAllocator* entity_alloc, Entity& entity, MovementCom
 		Vec2 top_pos = { entity.position.x + entity.size.x, entity.position.y + entity.size.y };
 		if (entity.position.x < 0 || top_pos.x > SCREEN_WIDTH || entity.position.y < 0 || top_pos.y > SCREEN_HEIGHT)
 		{
-			printf("Player out of screen bounds!!\n");
 			entity.position -= mov_comp.velocity * SPEED * dt;
 		}
 	}
 	else if (entity.position.x < -entity.size.x || entity.position.x > SCREEN_WIDTH || entity.position.y < -entity.size.y || entity.position.y > SCREEN_HEIGHT)
 	{
-		printf("Destroying something!!\n");
 		entity_alloc->QueueDestroy(entity.id);
 	}
 }

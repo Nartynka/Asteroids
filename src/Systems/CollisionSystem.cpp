@@ -1,5 +1,4 @@
 #include "Systems.h"
-#include <stdio.h>
 #include <Entity/Entity.h>
 
 int points = 0;
@@ -32,7 +31,6 @@ void check_collision()
 			{
 				if ((entity_a.HasComponent(Components::PLAYER) && entity_b.HasComponent(Components::ASTEROID)) || (entity_b.HasComponent(Components::PLAYER) && entity_a.HasComponent(Components::ASTEROID)))
 				{
-					printf("GAME OVER!!!!!!!!!!!\n");
 					game_over = true;
 					entity_alloc->QueueDestroy(entity_a.id);
 					entity_alloc->QueueDestroy(entity_b.id);
