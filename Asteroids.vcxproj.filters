@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Pliki źródłowe">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Pliki zasobów">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Systems">
+      <UniqueIdentifier>{d9e0da16-0cad-43a5-a428-26a1c21e379a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Components">
+      <UniqueIdentifier>{a445d2b8-8806-4888-a2e3-9260539b3509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Entity">
+      <UniqueIdentifier>{c88cec22-95ce-42ca-a8a4-248895c824dd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\ComponentAllocator.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity\EntityAllocator.cpp">
+      <Filter>Pliki źródłowe\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity\Spawners.cpp">
+      <Filter>Pliki źródłowe\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\InputSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\MoveSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\RenderSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\CollisionSystem.cpp">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Components\Components.h">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vec2.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\Systems.h">
+      <Filter>Pliki źródłowe\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StaticVector.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HandleStaticVector.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity\Entity.h">
+      <Filter>Pliki źródłowe\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity\Spawners.h">
+      <Filter>Pliki źródłowe\Entity</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
