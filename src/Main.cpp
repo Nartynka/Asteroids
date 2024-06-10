@@ -7,8 +7,9 @@
 #include "Entity/Spawners.h"
 #include "Systems/Systems.h"
 
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
+SDL_Window* window = nullptr;
+SDL_Renderer* renderer = nullptr;
+TTF_Font* font = nullptr;
 
 int main(int argc, char* args[])
 {
@@ -17,6 +18,8 @@ int main(int argc, char* args[])
 	float lastTime = 0.f;
 	const float DESIRED_DT = 1 / 60.f; // 60 FPS
 
+	// NULL literally expands to 0 
+	// #define NULL 0
 	srand(time(NULL));
 
 	//@TODO: Initialization of SDL should be a part of some system initalization
@@ -34,6 +37,9 @@ int main(int argc, char* args[])
 
 	result = TTF_Init();
 	assert(result != -1 && "SDL_ttf could not initialize!");
+
+	font = TTF_OpenFont("res/fonts/PressStart.ttf", 24);
+	assert(font != nullptr && "Failed to load font!");
 
 	EntityAllocator* entity_alloc = EntityAllocator::Get();
 	ComponentAllocator* comp_alloc = ComponentAllocator::Get();
@@ -83,18 +89,19 @@ int main(int argc, char* args[])
 			}
 			
 			// Points text
-			queue_text_surface("Points: " + std::to_string(points));
+			queue_text_surface(font, "Points: " + std::to_string(points));
 			if(game_over)
 			{
-				queue_text_surface("GAME OVER!!");
+				queue_text_surface(font, "GAME OVER!!");
 			}
 			
 			render(renderer);
-
 			lastTime = (float)SDL_GetTicks();
 		}
 	}
 
+	TTF_CloseFont(font);
+	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;

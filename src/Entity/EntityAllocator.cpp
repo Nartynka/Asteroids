@@ -21,7 +21,7 @@ EntityAllocator* EntityAllocator::Get()
 
 SDL_Texture* load_texture(SDL_Renderer* renderer, const char* path, Vec2& size)
 {
-	SDL_Texture* new_texture = NULL;
+	SDL_Texture* new_texture = nullptr;
 	SDL_Surface* loaded_surface = IMG_Load(path);
 	assert(loaded_surface != nullptr && "Unable to load image\n");
 
@@ -55,9 +55,9 @@ int EntityAllocator::CreateEntity(Vec2 position, const char* path, SDL_Renderer*
 	// if we are loading texture here, is path to file still needed?
 	strncpy_s(entity.texture_path, path, len);
 
-	for (int i = 0; i < Components::COUNT; i++)
+	for (int& comp_id : entity.comp_ids)
 	{
-		entity.comp_ids[i] = -1;
+		comp_id = -1;
 	}
 
 	return idx;
@@ -65,7 +65,11 @@ int EntityAllocator::CreateEntity(Vec2 position, const char* path, SDL_Renderer*
 
 void EntityAllocator::QueueDestroy(int entity_id)
 {
-	queued_entities.push_back(entity_id);
+	bool is_duplicate = queued_entities.contains(entity_id);
+	if (!is_duplicate)
+	{
+		queued_entities.push_back(entity_id);
+	}
 }
 
 void EntityAllocator::DestroyEntities()
@@ -78,6 +82,8 @@ void EntityAllocator::DestroyEntities()
 		{
 			int entity_id = queued_entities[i];
 			comp_aloc->DestroyMovementComponent(entity_id);
+			
+			SDL_DestroyTexture(entities[entity_id].texture);
 			entities.erase(entity_id);
 		}
 

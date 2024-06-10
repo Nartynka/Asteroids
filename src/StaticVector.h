@@ -1,6 +1,8 @@
 #pragma once
 #include <cassert>
 #include <utility>
+#include <algorithm>
+
 
 template <typename T, size_t i>
 class StaticVector
@@ -63,6 +65,28 @@ public:
 		{
 			e = value;
 		}
+	}
+
+	bool contains(T& element)
+	{
+		// Algorithms are "less error-prone than loops as they were already written and tested - a lot"
+		// And std::find is more readable than a simple for loop
+		// You can directly see that you are trying to *find* something there.
+		//for (T& e : data_array)
+		//{
+		//	if (e == element)
+		//		return true;
+		//}
+		//return false;
+
+		T* result = std::find(std::begin(data_array), std::end(data_array), element);
+		//return !result;
+
+		if (result != std::end(data_array))
+		{
+			return true;
+		}
+		return false;
 	}
 
 private:

@@ -18,6 +18,7 @@ public:
 	{
 		assert((handle >= 0 && handle < elements.capacity()) && "Invalid handle value");
 		int data_idx = handle_map[handle];
+		assert(data_idx != -1 && "Handle value already deleted");
 		return elements[data_idx];
 	}
 
